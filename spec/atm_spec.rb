@@ -22,4 +22,9 @@ end
         expected_output = { status: true, message: 'success', date: Date.today, amount: 45 }
         expect(subject.withdraw(45, account)).to eq expected_output
     end
+
+    it 'rejects withdraw if account has insufficent funds' do
+        expected_output = { status: false, message: 'insufficent funds', date: Date.today }
+        expect(subject.withdraw(105, account)).to eq expected_output
+    end
 end
