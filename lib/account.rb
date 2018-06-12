@@ -1,14 +1,14 @@
 require 'date'
 class Account
     STANDARD_VALIDITY_YRS = 5
-    attr_accessor :pin_code, :balance, :exp_date, :account_status
+    attr_accessor :pin_code, :balance, :exp_date, :account_status, :owner
   
     def initialize(attrs = {})
      @account_status = :active
      @exp_date = set_expire_date
      @pin_code = generate_pin
      @balance = 0
-     set_owner(attrs[:owner])
+      set_owner(attrs[:owner])
     end
 
     def set_expire_date
@@ -24,8 +24,9 @@ class Account
     end
 
     private
+    
     def set_owner(obj)
-    obj == nil ? missing_owner : @owner = obj
+        obj == nil ? missing_owner : @owner = obj
     end
 
     def missing_owner
