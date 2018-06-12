@@ -2,6 +2,8 @@ require './lib/account.rb'
 require 'date'
 
 describe Account do
+let(:person) {instance_double('Person', name: 'Thomas')}
+subject { described_class.new({owner: person}) }
 
     it  'is expected to have a 4 digit pin number on initalize' do
         pin_length = Math.log10(subject.pin_code).to_i + 1
