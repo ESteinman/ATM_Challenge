@@ -7,7 +7,7 @@ class ATM
         @funds = 1000
     end
 
-    def withdraw(amount, pin_code, account)
+    def withdraw(amount, pin_code, account, account_status) 
         case
         when insufficent_funds_in_account?(amount, account)
             { status: false, message: 'insufficent funds', date: Date.today}
@@ -17,13 +17,11 @@ class ATM
             { status: false, message: 'wrong pin', date: Date.today}
         when card_expired?(account.exp_date)
             { status: false, message: 'card expired', date: Date.today}
+        when card_disabled?(account_status)
+            { status: false, message: 'card disabled', date: Date.today }
         else
          perform_transaction(amount, account)
         end 
-    end
-
-    def card_expired?(exp_date)
-        Date.strptime(exp_date, '%m/%y') < Date.today
     end
 
     private
@@ -46,5 +44,11 @@ class ATM
         pin_code != actual_pin
     end
 
-    
+    def card_expired?(exp_date)
+        Date.strptime(exp_date, '%m/%y') < Date.today
+    end
+
+    def card_disabled?(account_status)
+        account_status != :active
+    end
 end
