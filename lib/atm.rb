@@ -11,6 +11,8 @@ class ATM
         case
         when insufficent_funds_in_account?(amount, account)
             { status: false, message: 'insufficent funds', date: Date.today}
+        when insufficent_funds_in_atm?(amount)
+    { status: false, message: 'insufficent funds in ATM', date: Date.today}
         else
          perform_transaction(amount, account)
         end 
@@ -20,6 +22,10 @@ class ATM
 
     def insufficent_funds_in_account?(amount, account)
         amount > account.balance
+    end
+
+    def insufficent_funds_in_atm?(amount)
+        @funds < amount
     end
 
     def perform_transaction(amount, account)

@@ -27,4 +27,10 @@ end
         expected_output = { status: false, message: 'insufficent funds', date: Date.today }
         expect(subject.withdraw(105, account)).to eq expected_output
     end
+
+    it 'reject withdraw if ATM has insufficent funds' do
+        subject.funds = 50
+        expected_output = { status: false, message: 'insufficent funds in ATM', date: Date.today }
+        expect(subject.withdraw(100, account)).to eq expected_output
+    end
 end
