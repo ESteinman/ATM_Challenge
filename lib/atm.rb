@@ -1,3 +1,4 @@
+require './lib/person'
 require 'date'
 
 class ATM
@@ -7,17 +8,17 @@ class ATM
         @funds = 1000
     end
 
-    def withdraw(amount, pin_code, account, account_status) 
+    def withdraw(amount, pin, account) 
         case
         when insufficent_funds_in_account?(amount, account)
-            { status: false, message: 'insufficent funds', date: Date.today}
+            { status: false, message: 'insufficent funds', date: Date.today }
         when insufficent_funds_in_atm?(amount)
             { status: false, message: 'insufficent funds in ATM', date: Date.today}
-        when incorrect_pin?(pin_code, account.pin_code)
+        when incorrect_pin?(pin, account.pin)
             { status: false, message: 'wrong pin', date: Date.today}
         when card_expired?(account.exp_date)
             { status: false, message: 'card expired', date: Date.today}
-        when card_disabled?(account_status)
+        when card_disabled?(account.account_status)
             { status: false, message: 'card disabled', date: Date.today }
         else
          perform_transaction(amount, account)
@@ -50,11 +51,11 @@ class ATM
             end
         end
         bills
-        end
+    end
 
 
-    def incorrect_pin?(pin_code, actual_pin)
-        pin_code != actual_pin
+    def incorrect_pin?(pin, actual_pin)
+        pin != actual_pin
     end
 
     def card_expired?(exp_date)

@@ -5,10 +5,10 @@ require 'date'
  let(:account) { instance_double('Account', pin_code: '1234', exp_date: '07/18', account_status: :active) }
  
 
-before do
-    allow(account).to receive(:balance).and_return(100)
-    allow(account).to receive(:balance=)
-end
+    before do
+        allow(account).to receive(:balance).and_return(100)
+        allow(account).to receive(:balance=)
+    end
     
     it 'has $1000 on initalize' do
         expect(subject.funds).to eq 1000
@@ -55,6 +55,4 @@ end
         expected_output = { status: false, message: 'card disabled', date: Date.today }
         expect(subject.withdraw(50, '1234', account , :disabled)).to eq expected_output
     end    
-
-
 end
