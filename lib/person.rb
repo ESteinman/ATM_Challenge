@@ -1,4 +1,5 @@
 require './lib/account'
+require './lib/atm'
 
     class Person
 
@@ -14,7 +15,13 @@ require './lib/account'
             @account = Account.new(owner: self)
         end
 
-        
+        def deposit (amount)
+            @account == nil ?  deposit_declined : @account = amount
+        end
+
+        def no_account_is_set
+            raise 'No account present'
+        end
 
         private
         def set_name(name)
@@ -23,6 +30,10 @@ require './lib/account'
 
         def no_name_is_set
             raise "A name is required"
+        end
+
+        def deposit_declined
+            raise RuntimeError, 'No account present'
         end
 
 
