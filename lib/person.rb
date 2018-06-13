@@ -1,10 +1,11 @@
 class Person
 
-    attr_accessor :name, :cash
+    attr_accessor :name, :cash, :account
 
     def initialize(attrs = {})
         set_name(attrs[:name])
         @cash = 0
+        @account = nil
     end
     
     private
