@@ -14,6 +14,8 @@ require './lib/account'
             @account = Account.new(owner: self)
         end
 
+        
+
         private
         def set_name(name)
             name == nil ?  no_name_is_set : @name = name
