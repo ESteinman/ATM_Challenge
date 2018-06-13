@@ -15,7 +15,7 @@ class Person
         @account = Account.new(owner: self)
     end
 
-    def deposit (amount)
+    def deposit(amount)
         @account == nil ? missing_account : deposit_funds(amount)
     end
 
