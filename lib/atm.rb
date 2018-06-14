@@ -8,7 +8,7 @@ class ATM
         @funds = 1000
     end
 
-    def withdraw(amount, pin, account) 
+    def withdraw(amount, pin, account, account_status) 
         case
         when insufficent_funds_in_account?(amount, account)
             { status: false, message: 'insufficent funds', date: Date.today }
@@ -16,12 +16,12 @@ class ATM
             { status: false, message: 'insufficent funds in ATM', date: Date.today}
         when incorrect_pin?(pin, account.pin)
             { status: false, message: 'wrong pin', date: Date.today}
-        when card_expired?(account.exp_date)
+        when card_expired?(account.exp_date, account_status)
             { status: false, message: 'card expired', date: Date.today}
-        when card_disabled?(account.account_status)
+        when card_disabled?(account_status)
             { status: false, message: 'card disabled', date: Date.today }
         else
-         perform_transaction(amount, account)
+         perform_transaction(amount, account, account_status)
         end 
     end
 
@@ -35,10 +35,10 @@ class ATM
         @funds < amount
     end
 
-    def perform_transaction(amount, account)
+    def perform_transaction(amount, account, account_status)
         @funds -= amount
         account.balance = account.balance - amount
-        { status: true, message: 'success', date: Date.today, amount: amount, bills: add_bills(amount) }
+        { status: true, message: 'success', date: Date.today, amount: amount, bills: add_bills(amount)}
     end
 
     def add_bills(amount)

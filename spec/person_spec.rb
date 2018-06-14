@@ -67,7 +67,6 @@ describe Person do
         end
 
         it 'funds are insufficent on account' do
-            binding.pry
             subject.account.balance = 0
             expected_output = { status: false, message: 'insufficent funds in account', date: Date.today }
             expect(subject.withdraw(amount: 100, pin: subject.account.pin, account: subject.account, atm: atm)).to eq expected_output
