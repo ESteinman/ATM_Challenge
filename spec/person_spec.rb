@@ -1,7 +1,9 @@
 require './lib/person'
 require './lib/atm'
+require 'date'
 
 describe Person do
+let(:account) { instance_double('Account', pin_code: '1234', exp_date: '07/18', account_status: :active)}
 
     subject { described_class.new(name: 'Thomas') }
 
@@ -62,13 +64,13 @@ describe Person do
             subject.cash = 100
             subject.deposit(100)
             subject.withdraw(amount: 100, pin: subject.account.pin, account: subject.account, atm: atm)
-            expect(subject.account.balance).to be 0
-            expect(subject.cash).to be 100
+            expect(subject.account.balance).to eq 0
+            expect(subject.cash).to eq 100
         end
 
         it 'funds are insufficent on account' do
             subject.account.balance = 0
-            expected_output = { status: false, message: 'insufficent funds in account', date: Date.today }
+            expected_output = { status: false, message: 'insufficent funds', date: Date.today }
             expect(subject.withdraw(amount: 100, pin: subject.account.pin, account: subject.account, atm: atm)).to eq expected_output
         end
     end

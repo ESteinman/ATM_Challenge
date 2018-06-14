@@ -6,7 +6,7 @@ let(:person) {instance_double('Person', name: 'Thomas')}
 subject { described_class.new({owner: person}) }
 
     it  'is expected to have a 4 digit pin number on initalize' do
-        pin_length = Math.log10(subject.pin_code).to_i + 1
+        pin_length = Math.log10(subject.pin).to_i + 1
         expect(pin_length).to eq 4
     end
 
@@ -26,12 +26,12 @@ subject { described_class.new({owner: person}) }
     end
 
     it 'is expected to have :active status on initalize' do
-        expect(subject.account_status).to eq :active
+        expect(subject.condition).to eq :active
     end
 
     it 'deactivates account using Instance method' do
         subject.deactivate
-        expect(subject.account_status).to eq :deactivated
+        expect(subject.condition).to eq :deactivated
     end
 
     it 'is expected to have an owner' do

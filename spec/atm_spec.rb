@@ -2,7 +2,7 @@ require './lib/atm.rb'
 require 'date'
 
  describe ATM do
- let(:account) { instance_double('Account', pin: '1234', exp_date: '07/18', account_status: :active) }
+ let(:account) { instance_double('Account', pin: '1234', exp_date: '07/18', condition: :active) }
  
 
     before do
@@ -52,7 +52,9 @@ require 'date'
     end
 
     it 'reject withdraw if card is disabled' do
+        allow(account).to receive(:condition).and_return(:deactivated)
+
         expected_output = { status: false, message: 'card disabled', date: Date.today }
-        expect(subject.withdraw(50, '1234', account , :disabled)).to eq expected_output
+        expect(subject.withdraw(0, '1234', account, :deactivated)).to eq expected_output
     end    
 end

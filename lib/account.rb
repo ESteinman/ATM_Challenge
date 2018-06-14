@@ -1,10 +1,10 @@
 require 'date'
 class Account
     STANDARD_VALIDITY_YRS = 5
-    attr_accessor :pin, :balance, :exp_date, :account_status, :owner
+    attr_accessor :pin, :balance, :exp_date, :condition, :owner
   
     def initialize(attrs = {})
-     @account_status = :active
+     @condition = :active
      @exp_date = set_expire_date
      @pin = generate_pin
      @balance = 0
@@ -20,7 +20,7 @@ class Account
     end
 
     def deactivate
-        @account_status = :deactivated
+        @condition = :deactivated
     end
 
     private
